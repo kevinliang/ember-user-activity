@@ -28,9 +28,7 @@ export default Service.extend(Evented, {
   },
 
   _setupListeners() {
-    this.get('defaultEvents').forEach((eventName) => {
-      this.enableEvent(eventName);
-    });
+    this.enableEvents(this.get('defaultEvents'));
   },
 
   _listen(eventName) {
@@ -60,6 +58,12 @@ export default Service.extend(Evented, {
     this._setupListeners();
   },
 
+  enableEvents(eventNames) {
+    eventNames.forEach((eventName) => {
+      this.enableEvent(eventName);
+    });
+  },
+
   enableEvent(eventName) {
     if (!this.isEnabled(eventName)) {
       this.get('enabledEvents').pushObject(eventName);
@@ -70,6 +74,12 @@ export default Service.extend(Evented, {
       };
       this._listen(eventName);
     }
+  },
+
+  disableEvents(eventNames) {
+    eventNames.forEach((eventName) => {
+      this.disableEvent(eventName);
+    });
   },
 
   disableEvent(eventName) {
@@ -97,9 +107,7 @@ export default Service.extend(Evented, {
   },
 
   willDestroy() {
-    this.get('_eventsListened').forEach((eventName) => {
-      this.disableEvent(eventName);
-    });
+    this.disableEvents(this.get('_eventsListened'));
 
     this._super(...arguments);
   }

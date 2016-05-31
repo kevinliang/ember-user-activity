@@ -66,11 +66,17 @@ Event names must be from the [DOM Event](https://developer.mozilla.org/en-US/doc
 Custom events are not currently supported. If you enable an event name 
 that was not set up by default, a new listener will be created automatically.
 
+Event names can also be enabled/disabled in batch:
+
+```javascript
+this.get('userActivity').enableEvents(['keyup', 'mouseenter', 'mouseleave']);
+```
+
 You can find out if an event is currently enabled:
 
 ```javascript
 this.get('userActivity').isEnabled('foo'); // false
-this.get('userActivity').isEnabled('keydown'); // true
+this.get('userActivity').isEnabled('keydown'); // true by default
 ```
 
 Each individual event is throttled by 100ms for performance reasons, 
